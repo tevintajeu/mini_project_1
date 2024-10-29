@@ -50,13 +50,76 @@ def draw_sphere(context, center_x, center_y, radius):
     context.arc(center_x, center_y, radius, 0, 2 * math.pi)
     gradient = cairo.RadialGradient(center_x - radius * 0.5, center_y - radius * 0.5, radius * 0.2,
                                     center_x, center_y, radius)
-    # Assuming you're using a canvas or drawing library with gradient support
-    gradient.add_color_stop_rgb(0, 0.9, 0.3, 0.3)      # Lighter red (start)
-    gradient.add_color_stop_rgb(0.7, 0.7, 0.1, 0.1)    # Midpoint red, slightly darker
-    gradient.add_color_stop_rgb(1, 0.5, 0, 0)          # Darker red at the end, but still not too dark
+  
+    gradient.add_color_stop_rgb(0, 0.9, 0.3, 0.3)     
+    gradient.add_color_stop_rgb(0.7, 0.7, 0.1, 0.1)    
+    gradient.add_color_stop_rgb(1, 0.5, 0, 0)         
 
 
     context.set_source(gradient)
+    context.fill()
+    context.set_source_rgb(1,1,1)
+    context.set_line_width(5)
+    
+    #Top Pattern
+    context.move_to(170, 215)
+    context.curve_to(200, 260, 400, 260, 430, 215)
+    context.stroke()
+
+    context.move_to(150, 240)
+    context.curve_to(190, 330, 410, 330, 450, 240)
+    context.stroke()
+
+    context.move_to(170, 215)
+    context.line_to(190, 280)
+    context.line_to(260, 247)
+    context.line_to(300, 306)
+    context.line_to(340, 247)
+    context.line_to(410, 280)
+    context.line_to(430, 215)
+    context.stroke()
+
+    context.arc(200, 255, 10, 0, 2 * math.pi)
+    context.fill()
+    context.arc(255, 270, 10, 0, 2 * math.pi)
+    context.fill()
+    context.arc(300, 265, 10, 0, 2 * math.pi)
+    context.fill()
+    context.arc(345, 270, 10, 0, 2 * math.pi)
+    context.fill()
+    context.arc(400, 255, 10, 0, 2 * math.pi)
+    context.fill()
+
+
+    # Bottom Pattern 
+    y_shift = 70  
+    context.move_to(120, 455)
+    context.curve_to(200, 520, 400, 520, 480, 455)
+    context.stroke()
+
+    context.move_to(150, 500)
+    context.curve_to(190, 560, 410, 560, 450, 500)
+    context.stroke()
+
+    context.move_to(150, 500)
+    context.line_to(190, 490)
+    context.line_to(240, 540)
+    context.line_to(300, 506)
+    context.line_to(360, 540)
+    context.line_to(410, 490)
+    context.line_to(450, 500)
+    context.stroke()
+
+    # Bottom pattern dots
+    context.arc(185, 510, 10, 0, 2 * math.pi)
+    context.fill()
+    context.arc(242, 520, 10, 0, 2 * math.pi)
+    context.fill()
+    context.arc(300, 530, 10, 0, 2 * math.pi)
+    context.fill()
+    context.arc(358, 520, 10, 0, 2 * math.pi)
+    context.fill()
+    context.arc(415, 510, 10, 0, 2 * math.pi)
     context.fill()
 
 draw_sphere(ctx, WIDTH // 2, HEIGHT // 1.625, 200)
