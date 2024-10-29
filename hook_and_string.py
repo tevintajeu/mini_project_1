@@ -2,9 +2,10 @@ import cairo
 import math
 
 #create an image surface
-surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 600, 400)
+WIDTH, HEIGHT = 600, 600
+surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 600, 600)
 ctx = cairo.Context(surface)
-ctx.set_source_rgb(0.8, 0.8, 0.8)
+ctx.set_source_rgb(1, 1, 1)
 ctx.paint()
 
 #draw the string
@@ -44,6 +45,21 @@ ctx.fill()
 ctx.set_source(gradient)  # Gold color
 ctx.rectangle(cap_x,cap_y,40,20)
 ctx.fill()
+
+def draw_sphere(context, center_x, center_y, radius):
+    context.arc(center_x, center_y, radius, 0, 2 * math.pi)
+    gradient = cairo.RadialGradient(center_x - radius * 0.5, center_y - radius * 0.5, radius * 0.2,
+                                    center_x, center_y, radius)
+    # Assuming you're using a canvas or drawing library with gradient support
+    gradient.add_color_stop_rgb(0, 0.9, 0.3, 0.3)      # Lighter red (start)
+    gradient.add_color_stop_rgb(0.7, 0.7, 0.1, 0.1)    # Midpoint red, slightly darker
+    gradient.add_color_stop_rgb(1, 0.5, 0, 0)          # Darker red at the end, but still not too dark
+
+
+    context.set_source(gradient)
+    context.fill()
+
+draw_sphere(ctx, WIDTH // 2, HEIGHT // 1.625, 200)
 
 #save the image
 surface.write_to_png('christmas.png')
