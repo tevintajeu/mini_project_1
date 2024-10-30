@@ -75,7 +75,7 @@ def draw_sphere(context, center_x, center_y, radius):
     context.stroke()
     
     
-    #  the traingles 
+    #  the triangles
     context.move_to(center_x-radius + 3,center_y-25)#
     context.line_to(center_x-radius + 20,center_y + 35) #
     context.line_to(center_x-radius + 57 ,center_y + 2) #
@@ -147,8 +147,6 @@ def draw_sphere(context, center_x, center_y, radius):
     context.fill()
     
     print("done")
-
-
 
 context.set_source_rgb(0.2, 0.2, 0.2)
 context.paint()
