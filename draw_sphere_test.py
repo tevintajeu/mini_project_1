@@ -151,6 +151,6 @@ def draw_sphere(context, center_x, center_y, radius):
 context.set_source_rgb(0.2, 0.2, 0.2)
 context.paint()
 draw_sphere(context, WIDTH // 2, HEIGHT // 2, 200)
-surface.write_to_png("3d_sphere.png")
+surface.write_to_png("3d_sphere_test.png")
 
 print("3D sphere image created!")
