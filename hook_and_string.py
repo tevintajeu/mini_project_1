@@ -5,18 +5,19 @@ import math
 WIDTH, HEIGHT = 600, 600
 surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 600, 600)
 ctx = cairo.Context(surface)
-ctx.set_source_rgb(1, 1, 1)
+ctx.set_source_rgb(0.8, 0.8, 0.8)
 ctx.paint()
 
 #draw the string
 string_x = 300  # Centered at the middle of the 600px width
-string_top_y = 50  # Top of the string
-string_bottom_y = 150
-ctx.move_to(300, 50)
-ctx.line_to(300, 150)
+string_top_y = 20  # Top of the string
+string_bottom_y = 80.7
+ctx.move_to(300, 20)
+ctx.line_to(300, 80.7)
 ctx.set_source_rgb(0.85, 0.75, 0.4)
 ctx.set_line_width(2)
 ctx.stroke()
+
 
 #draw the gold cap with rounded edges
 cap_width, cap_height = 40, 20
@@ -48,10 +49,10 @@ ctx.fill()
 
 def draw_sphere(context, center_x, center_y, radius):
     context.arc(center_x, center_y, radius, 0, 2 * math.pi)
-    gradient = cairo.RadialGradient(center_x - radius * 0.5, center_y - radius * 0.5, radius * 0.2,
+    gradient = cairo.RadialGradient(center_x + radius * 0.5, center_y - radius * 0.5, radius * 0.2,
                                     center_x, center_y, radius)
   
-    gradient.add_color_stop_rgb(0, 0.9, 0.3, 0.3)     
+    gradient.add_color_stop_rgb(0, 0.9, 0.5, 0.6)     
     gradient.add_color_stop_rgb(0.7, 0.7, 0.1, 0.1)    
     gradient.add_color_stop_rgb(1, 0.5, 0, 0)         
 
@@ -61,68 +62,9 @@ def draw_sphere(context, center_x, center_y, radius):
     context.set_source_rgb(1,1,1)
     context.set_line_width(5)
     
-    #Top Pattern
-    context.move_to(170, 215)
-    context.curve_to(200, 260, 400, 260, 430, 215)
-    context.stroke()
-
-    context.move_to(150, 240)
-    context.curve_to(190, 330, 410, 330, 450, 240)
-    context.stroke()
-
-    context.move_to(170, 215)
-    context.line_to(190, 280)
-    context.line_to(260, 247)
-    context.line_to(300, 306)
-    context.line_to(340, 247)
-    context.line_to(410, 280)
-    context.line_to(430, 215)
-    context.stroke()
-
-    context.arc(200, 255, 10, 0, 2 * math.pi)
-    context.fill()
-    context.arc(255, 270, 10, 0, 2 * math.pi)
-    context.fill()
-    context.arc(300, 265, 10, 0, 2 * math.pi)
-    context.fill()
-    context.arc(345, 270, 10, 0, 2 * math.pi)
-    context.fill()
-    context.arc(400, 255, 10, 0, 2 * math.pi)
-    context.fill()
 
 
-    # Bottom Pattern 
-    y_shift = 70  
-    context.move_to(120, 455)
-    context.curve_to(200, 520, 400, 520, 480, 455)
-    context.stroke()
-
-    context.move_to(150, 500)
-    context.curve_to(190, 560, 410, 560, 450, 500)
-    context.stroke()
-
-    context.move_to(150, 500)
-    context.line_to(190, 490)
-    context.line_to(240, 540)
-    context.line_to(300, 506)
-    context.line_to(360, 540)
-    context.line_to(410, 490)
-    context.line_to(450, 500)
-    context.stroke()
-
-    # Bottom pattern dots
-    context.arc(185, 510, 10, 0, 2 * math.pi)
-    context.fill()
-    context.arc(242, 520, 10, 0, 2 * math.pi)
-    context.fill()
-    context.arc(300, 530, 10, 0, 2 * math.pi)
-    context.fill()
-    context.arc(358, 520, 10, 0, 2 * math.pi)
-    context.fill()
-    context.arc(415, 510, 10, 0, 2 * math.pi)
-    context.fill()
-
-draw_sphere(ctx, WIDTH // 2, HEIGHT // 1.625, 200)
+draw_sphere(ctx, WIDTH // 2, HEIGHT // 2, 200)
 
 #save the image
 surface.write_to_png('christmas.png')
