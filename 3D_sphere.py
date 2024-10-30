@@ -106,20 +106,7 @@ def draw_sphere(context, center_x, center_y, radius):
     # context.arc(440,171,10,0,2*math.pi)
     context.fill()
 
-    # Set font properties and color for the text "Christmas"
-    ctx.select_font_face("Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
-    ctx.set_font_size(30)
-    ctx.set_source_rgb(1, 1, 1)  # White color for the text
 
-    # Get the text extents to calculate centered position
-    text = "Christmas"
-    text_extents = ctx.text_extents(text)
-    x_text = WIDTH // 2 - text_extents.width / 2
-    y_text = HEIGHT // 1.625 + text_extents.height / 4 + 39 # Slightly adjust to place it vertically centered
-
-    # Move to the calculated position and show the text
-    ctx.move_to(x_text, y_text)
-    ctx.show_text(text)
 
     # middle pattern
     context.move_to(center_x - radius + 2, center_y - 30)
@@ -200,7 +187,22 @@ def draw_sphere(context, center_x, center_y, radius):
     context.fill()
     context.arc(415, 440, 10, 0, 2 * math.pi)
     context.fill()
+    
+    
+    # Set font properties and color for the text "Christmas"
+    ctx.select_font_face("Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
+    ctx.set_font_size(30)
+    ctx.set_source_rgb(1, 1, 1)  # White color for the text
 
+    # Get the text extents to calculate centered position
+    text = "Christmas"
+    text_extents = ctx.text_extents(text)
+    x_text = WIDTH // 2 - text_extents.width / 2
+    y_text = HEIGHT // 1.625 + text_extents.height / 4 + 39 # Slightly adjust to place it vertically centered
+
+    # Move to the calculated position and show the text
+    ctx.move_to(x_text, y_text)
+    ctx.show_text(text)
     print("done")
 
 draw_sphere(ctx, WIDTH // 2, HEIGHT // 2, 200)
