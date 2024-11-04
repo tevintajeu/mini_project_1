@@ -1,156 +1,117 @@
-
 import math
-
 import cairo
+import pygame
 
+# Constants for the window size and sphere properties
 WIDTH, HEIGHT = 600, 600
-surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, WIDTH, HEIGHT)
-context = cairo.Context(surface)
+RADIUS = 200  # Radius of the sphere
+SWING_AMPLITUDE = 50  # Maximum distance from center to swing
+
+# Initialize Pygame
+pygame.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Swinging Ornament")
+
+# Set up a clock for controlling the frame rate
+clock = pygame.time.Clock()
+
+# Swing parameters
+angle = 0  # Starting angle for swinging
+angle_speed = 0.05  # Speed of swinging
 
 
 def draw_sphere(context, center_x, center_y, radius):
+    # Draw the sphere with a radial gradient for 3D effect
     context.arc(center_x, center_y, radius, 0, 2 * math.pi)
-    gradient = cairo.RadialGradient(center_x - radius * 0.5, center_y - radius * 0.5, radius * 0.2,
-                                    center_x, center_y, radius)
-    gradient.add_color_stop_rgb(0, 1, 1, 1)
-    gradient.add_color_stop_rgb(0.7, 0.5, 0.5, 0.5)
-    gradient.add_color_stop_rgb(1, 0.1, 0.1, 0.1)
+    gradient = cairo.RadialGradient(center_x, center_y, radius * 0.2, center_x, center_y, radius)
+
+    # Dark blue at the edges, lighter blue in the center
+    gradient.add_color_stop_rgb(0, 0.1, 0.1, 0.5)  # Darker blue at the edges
+    gradient.add_color_stop_rgb(0.7, 0.1, 0.5, 0.8)  # Lighter blue
+    gradient.add_color_stop_rgb(1, 0.5, 0.8, 1)  # Even lighter blue towards the center
+
     context.set_source(gradient)
     context.fill()
 
-    context.set_source_rgb(0,0,0)
+    context.set_source_rgb(0, 0, 0)
     context.set_line_width(5)
-     #Top Pattern
-    context.move_to(165,150)
-    context.curve_to(230,200,400,200,435,150)
+
+    # Middle Pattern
+    context.move_to(center_x - radius + 2, center_y - 30)
+    context.curve_to(center_x - 150, center_y + 25, center_x + 150, center_y + 25, center_x + radius, center_y - 30)
     context.stroke()
 
-    context.move_to(130,200)
-    context.curve_to(190,250,410,250,475,200)
+    context.move_to(center_x - radius + 2, center_y + 20)
+    context.curve_to(center_x - 150, center_y + 75, center_x + 150, center_y + 75, center_x + radius - 2, center_y + 20)
     context.stroke()
 
-    context.move_to(165,150)
-    context.line_to(172,222)
-    context.line_to(222,175)
-    context.line_to(243,232)
-    context.line_to(292,188)
-    context.line_to(327,238)
-    context.line_to(360,183)
-    context.line_to(400,230)
-    context.line_to(414,168)
-    context.line_to(457,213)
-    context.line_to(445,164)
+    # Draw triangles for the middle pattern
+    context.move_to(center_x - radius + 3, center_y - 25)
+    context.line_to(center_x - radius + 20, center_y + 35)
+    context.line_to(center_x - radius + 57, center_y + 2)
+    context.line_to(center_x - radius + 90, center_y + 52)
+    context.line_to(center_x - radius + 120, center_y + 8)
+    context.line_to(center_x - radius + 165, center_y + 60)
+    context.line_to(center_x - radius + 200, center_y + 11)
+    context.line_to(center_x - radius + 240, center_y + 60)
+    context.line_to(center_x - radius + 273, center_y + 11)
+    context.line_to(center_x - radius + 310, center_y + 55)
+    context.line_to(center_x - radius + 340, center_y)
+    context.line_to(center_x - radius + 377, center_y + 36)
     context.set_line_join(cairo.LINE_JOIN_BEVEL)
     context.stroke()
 
-    context.arc(148,192,10,0,2*math.pi)
-    context.fill()
-    context.arc(185,182,10,0,2*math.pi)
-    context.fill()
-    context.arc(215,210,10,0,2*math.pi)
-    context.fill()
-    context.arc(252,200,10,0,2*math.pi)
-    context.fill()
-    context.arc(290,219,10,0,2*math.pi)
-    context.fill()
-    context.arc(327,205,10,0,2*math.pi)
-    context.fill()
-    context.arc(365,217,10,0,2*math.pi)
-    context.fill()
-    context.arc(393,194,10,0,2*math.pi)
-    context.fill()
-    context.arc(424,205,10,0,2*math.pi)
-    context.fill()
-    # context.arc(440,171,10,0,2*math.pi)
-    context.fill()
-    
-    
-       # middle pattern
-    context.move_to(center_x - radius + 2,center_y - 30)
-    context.curve_to(center_x - 150,center_y + 25,center_x + 150,center_y + 25,center_x + radius  ,center_y - 30)
-    context.stroke()
+    # Draw small circles in the triangle pattern
+    for x, y in [(28, 7), (53, 31), (90, 22), (122, 39), (165, 30), (202, 43), (239, 30), (275, 43), (307, 26),
+                 (345, 32), (370, 12)]:
+        context.arc(center_x - radius + x, center_y + y, 10, 0, 2 * math.pi)
+        context.fill()
 
-    context.move_to(center_x - radius + 2 ,center_y + 20)
-    context.curve_to(center_x - 150,center_y+75,center_x + 150,center_y + 75,center_x + radius - 2,center_y + 20)
-    context.stroke()
-    
-    
-    #  the triangles
-    context.move_to(center_x-radius + 3,center_y-25)#
-    context.line_to(center_x-radius + 20,center_y + 35) #
-    context.line_to(center_x-radius + 57 ,center_y + 2) #
-    context.line_to(center_x-radius + 90,center_y + 52) #
-    context.line_to(center_x-radius + 120,center_y + 8) #
-    context.line_to(center_x-radius + 165,center_y + 60) #
-    context.line_to(center_x-radius + 200,center_y + 11 ) #
-    context.line_to(center_x-radius + 240,center_y + 60) #
-    context.line_to(center_x-radius + 273,center_y + 11) #
-    context.line_to(center_x-radius + 310,center_y + 55)
-    context.line_to(center_x-radius + 340,center_y ) #
-    context.line_to(center_x-radius + 377 ,center_y + 36)
-    context.line_to(center_x - radius + 397  ,center_y - 25)
-    context.set_line_join(cairo.LINE_JOIN_BEVEL)
-    context.stroke()
-    
-    # the circles
-    context.arc(center_x - radius + 28,center_y + 7,10,0,2*math.pi)#
-    context.fill()
-    context.arc(center_x - radius + 53,center_y + 31,10,0,2*math.pi)#
-    context.fill()
-    context.arc(center_x - radius + 90,center_y + 22,10,0,2*math.pi)#
-    context.fill()
-    context.arc(center_x - radius + 122,center_y + 39,10,0,2*math.pi) #
-    context.fill()
-    context.arc(center_x - radius + 165,center_y + 30,10,0,2*math.pi) #
-    context.fill()
-    context.arc(center_x - radius + 202,center_y + 43,10,0,2*math.pi) #
-    context.fill()
-    context.arc(center_x - radius + 239,center_y + 30,10,0,2*math.pi) #
-    context.fill()
-    context.arc(center_x - radius + 275,center_y + 43,10,0,2*math.pi) #
-    context.fill()
-    context.arc(center_x - radius + 307,center_y  + 26 ,10,0,2*math.pi) #
-    context.fill()
-    context.arc(center_x - radius + 345,center_y + 32,10,0,2*math.pi)#
-    context.fill()
-    context.arc(center_x - radius + 370,center_y + 12,10,0,2*math.pi)#
-    context.fill()
 
-    #Bottom Pattern
-    context.move_to(121,392)
-    context.curve_to(200,450,400,450,478,392)
-    context.stroke()
+def main():
+    global angle  # Make angle accessible within the function
+    running = True
+    while running:
+        # Handle events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
 
-    context.move_to(160,443)
-    context.curve_to(190,490,410,490,441,443)
-    context.stroke()
+        # Clear the screen
+        screen.fill((255, 255, 255))  # White background
 
-    context.move_to(153,442)
-    context.line_to(190,422)
-    context.line_to(240,470)
-    context.line_to(300,436)
-    context.line_to(360,472)
-    context.line_to(410,422)
-    context.line_to(454,430)
-    context.set_line_join(cairo.LINE_JOIN_BEVEL)
-    context.stroke()
+        # Calculate the new position for swinging
+        center_x = WIDTH // 2
+        center_y = HEIGHT // 2
+        swing_x = center_x + SWING_AMPLITUDE * math.sin(angle)  # Swing left and right
+        swing_y = center_y  # Keep the y-coordinate constant
 
-    context.arc(190,446,10,0,2*math.pi)
-    context.fill()
-    context.arc(242,450,10,0,2*math.pi)
-    context.fill()
-    context.arc(300,460,10,0,2*math.pi)
-    context.fill()
-    context.arc(358,450,10,0,2*math.pi)
-    context.fill()
-    context.arc(415,440,10,0,2*math.pi)
-    context.fill()
-    
-    print("done")
+        # Create a new Cairo surface to draw the sphere
+        surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, WIDTH, HEIGHT)
+        context = cairo.Context(surface)
 
-context.set_source_rgb(0.2, 0.2, 0.2)
-context.paint()
-draw_sphere(context, WIDTH // 2, HEIGHT // 2, 200)
-surface.write_to_png("3d_sphere_test.png")
+        # Draw the sphere at the new position
+        draw_sphere(context, swing_x, swing_y, RADIUS)
 
-print("3D sphere image created!")
+        # Copy Cairo surface to Pygame surface
+        data = surface.get_data()
+        image = pygame.image.fromstring(bytes(data), (WIDTH, HEIGHT), "ARGB")
+        screen.blit(image, (0, 0))
+
+        # Update the angle for the next frame
+        angle += angle_speed
+        if angle > 2 * math.pi:  # Reset angle if it exceeds 360 degrees
+            angle -= 2 * math.pi
+
+        # Update the display
+        pygame.display.flip()
+
+        # Cap the frame rate to 60 FPS
+        clock.tick(60)
+
+    pygame.quit()
+    print("Pygame exited cleanly.")  # Confirm exit
+c
+
+if __name__ == "__main__":
+    main()
